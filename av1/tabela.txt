@@ -1,0 +1,29 @@
+spotify:
+
+tabelas:
+
+Album
+- idAlbum int pk not null
+- title varchar(50) not null
+- year varchar(45) not null
+- idArtist int not null
+
+Artist
+- idArtist int pk  not null
+- name varchar(45) not null
+- instagramUrl varchar(40)
+- tweeterUrl varchar(40)
+- facebookUrl varchar(40)
+
+Country
+- country_id int  pk   not null auto increment
+- country_iso_code varchar(10) 
+- country_name varchar(200)
+
+Music
+- idMusic int pk  not null
+- title varchar(45) not null
+- time int unsigned not null
+- idAlbum int not null
+
+
