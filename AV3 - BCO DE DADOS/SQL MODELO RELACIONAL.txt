@@ -1,0 +1,90 @@
+SQL MODELO RELACIONAL
+
+CREATE TABLE USUARIO
+(
+  idUsuario INT NOT NULL,
+  email VARCHAR(100) NOT NULL,
+  senha VARCHAR(12) NOT NULL,
+  nome VARCHAR(50) NOT NULL,
+  telefone NUMERIC(11) NOT NULL,
+  PRIMARY KEY (idUsuario)
+);
+
+CREATE TABLE PLANO
+(
+  idPlano INT NOT NULL,
+  descricao VARCHAR(30) NOT NULL,
+  valorMensal NUMERIC(6,2) NOT NULL,
+  qntTelas INT NOT NULL,
+  PRIMARY KEY (idPlano)
+);
+
+CREATE TABLE ASSINATURA
+(
+  idAssinatura INT NOT NULL,
+  dataInicio DATE NOT NULL,
+  dataFim DATE NOT NULL,
+  dataCancelamento DATE NOT NULL,
+  horaCancelamento NUMERIC(4,2) NOT NULL,
+  motivoCancelamento VARCHAR(100) NOT NULL,
+  idUsuario INT NOT NULL,
+  idPlano INT NOT NULL,
+  PRIMARY KEY (idAssinatura, idUsuario, idPlano),
+  FOREIGN KEY (idUsuario) REFERENCES USUARIO(idUsuario),
+  FOREIGN KEY (idPlano) REFERENCES PLANO(idPlano)
+);
+
+CREATE TABLE FILME
+(
+  idFilme INT NOT NULL,
+  titulo VARCHAR(100) NOT NULL,
+  PRIMARY KEY (idFilme)
+);
+
+CREATE TABLE CARTAO
+(
+  numero NUMERIC(16) NOT NULL,
+  idCartao INT NOT NULL,
+  codSeguranca NUMERIC(3) NOT NULL,
+  validade DATE NOT NULL,
+  idUsuario INT NOT NULL,
+  PRIMARY KEY (idCartao),
+  FOREIGN KEY (idUsuario) REFERENCES USUARIO(idUsuario)
+);
+
+CREATE TABLE COBRANÇA
+(
+  idCobranca INT NOT NULL,
+  dataDebito DATE NOT NULL,
+  dataLimiteServico DATE NOT NULL,
+  idAssinatura INT NOT NULL,
+  PRIMARY KEY (idCobranca),
+  FOREIGN KEY (idAssinatura) REFERENCES ASSINATURA(idAssinatura)
+);
+
+CREATE TABLE ASSISTIR
+(
+  idAssistir INT NOT NULL,
+  dataInicio DATE NOT NULL,
+  horaInicio NUMERIC(4,2) NOT NULL,
+  curtida boolean,
+  PRIMARY KEY (idAssistir)
+);
+
+CREATE TABLE faz
+(
+  idUsuario INT NOT NULL,
+  idAssistir INT NOT NULL,
+  PRIMARY KEY (idUsuario, idAssistir),
+  FOREIGN KEY (idUsuario) REFERENCES USUARIO(idUsuario),
+  FOREIGN KEY (idAssistir) REFERENCES ASSISTIR(idAssistir)
+);
+
+CREATE TABLE ser
+(
+  idFilme INT NOT NULL,
+  idAssistir INT NOT NULL,
+  PRIMARY KEY (idFilme, idAssistir),
+  FOREIGN KEY (idFilme) REFERENCES FILME(idFilme),
+  FOREIGN KEY (idAssistir) REFERENCES ASSISTIR(idAssistir)
+);
